@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="styles/main.css">
     <title>Portfolio</title>
 </head>
 <body>
     <header>
-        <img class="logo" src="https://i.postimg.cc/hGYgg2JY/istockphoto-587805156-612x612.jpg" alt="SethJKallis">
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#resume">Resume</a></li>
-                <li><a href="#project">Project</a></li>
-                <li><a href="#contact">Contact</a></li>
+        <img class="logo" src="Img/real-estate-logo-600w-1615688014.webp" alt="SethJKallis">
+        <nav class="menu">
+            <ul class="menu-list">
+                <li><a href="#home">Home</a></li>|
+                <li><a href="#resume">Resume</a></li>|
+                <li><a href="#project">Project</a></li>|
+                <li><a href="#about">About</a></li>|
+                <li><a href="#contact">Contact</a></li>|
+                
             </ul>
         </nav>
     </header>
@@ -23,33 +25,123 @@
     <main>
         <section id="home">
             <!-- Home -->
-            <h2>Home</h2>
-             <div>
+             <div class="wrapper">
+                <h2>Home</h2>
                 <h4>Seth Kallis</h4>
-                    <img src="https://i.postimg.cc/hGYgg2JY/istockphoto-587805156-612x612.jpg" alt="Seth Kallis">
-                    <p>Life Choices Student</p>
+                    <img class="profile" src="https://i.postimg.cc/hGYgg2JY/istockphoto-587805156-612x612.jpg" alt="Seth Kallis">
+                    <p>Aspiring Developer</p>
              </div>
+
+             <hr>
+             <br>
 
         </section>
 
         <section id="resume">
             <!-- Resume -->
             <h2>Resume</h2>
+                <h3>Education</h3>
+                <dl>
+                    <dt>Matric |2018</dt>
+                    <dd>I matriculated in 2018 at Noorder Paarl High School</dd>
+                    <dt>Higher Education |2018-2020</dt>
+                    <dd>I spent 2 years at UCT studying B.Com Accounting(incomplete)</dd>
+                </dl>
+                <br>
 
+                <h3>Work Experience</h3>
+                <p>I have worked in the business sector before and am looking to make a career shift into web development. my past experience include:</p>
+                <br>
+                <div>
+                <dl>
+                    <dt>Admin Worker |2017-2018</dt>
+                    <dd>I would perform common ad hoc duties such as data capturing and filing.</dd>
+                    <dt>Accounts Clerk |2020-2022</dt>
+                    <dd>I would assist a head accountant in the dafting of financial statements as well as the interpretation of those finacial statements for laymen's.</dd>
+                    <dt>Bookkeeper |2020-2022</dt>
+                    <dd>I would keep a record of the day to day transactions performed by the business.</dd>
+                </div>
+                </dl>
         </section>
-
+<br>
+<hr>
+<br>
         <section id="project">
             <!-- Project -->
             <h2>Project</h2>
+            <p>Projects that I have worked on before include drafting of statements for companies (confidential). <br> I have also done a few projects on web development: <br> <a href="https://github.com/SethJKallis/Portfolio" target="_blank">GitHub</a></p>
+        </section>
+<br>
+<hr>
+<br>
+
+        <section id="about">
+            <h2>About me</h2>
+            <h3>Hobbies</h3>
+            <p> love listening to all types of music ranging from rock to RnB to Drill. I also enjoy gaming on PC. I have a steam library with more than 100 games. I play 5-a-side football every Sunday and watch anime when im not being active.</p><br>
+            <h3>Aspirations</h3>
+            <p>I aspire to become a Web Developer. My short-term goal is to become a frint-end web developer. I want to work as a front-end developer before transitioning into a back-end developer. Once I've become a back-end developer I would work for a few years before becoming a freelance Back-end, Front-end and/or Full Stack Developer. My long-term goal is to go into business for myself. I will start my own company and use what I learn in web development to eventually open my own practice. over the course of my training i will network and establish relationships with people who would willingly offload excess work to me, in which case I will truly become my own boss.</p>
+            <br>
+            <h3>Skills</h3>
+            <p>
+            <ul class="skills">
+                <li>Computer Literate</li>
+                <li>Knowledge of Microsoft Office Applications such as MS Word and MS Excel</li>
+                <li>I can code in HTML and am currently learning CSS.</li>
+                <li>I can draft financial statements.</li>
+                <li>I can do taxes via SARS E-Filing.</li>
+                <li>My singing voice isn't too bad.</li>
+                <li>Fluent in both English and Afrikaans.</li>
+            </ul>
+            </p>
 
         </section>
+
+<br>
+<hr>
+<br>
 
         <section id="contact">
             <!-- Contact -->
             <h2>Contact</h2>
+            <form action="https://formspree.io/f/mvoyregg" method="post">
+            <fieldset>
+                <form action="https://formspree.io/f/mvoyregg" method="post">
+                <legend>Contact Me:</legend>
+                <br>
+                <label for="name">Name:</label>
+                <input type="text" name="name" id="name" required placeholder="John">
+                <br><br>
+                    <label for="surname">Surname:</label>
+                    <input type="text" name="surname" id="surname" required placeholder="Doe">
+                <br><br>
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" id="email" placeholder="email@gmail.com">
+                <br><br>
+                <label for="comments">Comments:</label><br>
+                <textarea name="comments" id="comments" cols="30" rows="5">Wassup?</textarea>
+                <br>
+                <button>Submit</button>
+            <button type="reset">Reset</button>
+            </fieldset>
+            
+        </form>
 
+        <h3>Contact me at:</h3>
+        <address>
+            33 Mathew Road <br>
+            Harfiled Village <br>
+            Claremont <br>
+            Cape Town <br>
+            7708
+        </address>
+        <br>
+        <p>Phone Number <br> <a href="tel:">064 933 8144</a></p>
+        <br>
+        <p>Email Address <br><a href="mailto:">kallisseth@gmail.com</a></p>
         </section>
-        
+   <br>    
+   <hr> 
     </main>
 
     <footer>

@@ -1,0 +1,89 @@
+/* select all elements */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* header, main and footer */
+header, main, footer{
+    min-width: 100%;
+}
+
+header, footer{
+    background-color: grey;
+}
+/* header */
+header{
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.logo{
+    width: 3em;
+    border-radius: 1.5em;
+}
+
+.menu{
+    align-items: flex-end;
+    margin: 5px 10px 0;
+}
+.menu-list{
+    display: inline-flex;
+    list-style: none;
+}
+
+.menu-list li{
+    padding: 0 5px;
+}
+
+
+h1,h2,h3,h4,h5,h6{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.wrapper{
+    min-width: 100%;
+    align-content: center;
+    background-color: darkgrey;
+}
+.wrapper img{
+    display: block;
+    margin: 15px auto;
+}
+.wrapper p{
+    text-align: center;
+}
+.profile{
+    border-radius: 50em;
+}
+dt{
+    font-weight: bold;
+}
+main{
+    background-color: lightgrey;
+}
+.skills{
+    margin-left: 15px;
+}
+legend{
+    font-size: larger;
+    font-weight: bold;
+}
+label{
+    padding-right: 10px;
+    font-weight: bold;
+}
+textarea{
+    margin-left: 15px;
+}
+p{
+    text-align: center;
+}
+address{
+    text-align: center;
+}
+button{
+    
+}
