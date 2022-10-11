@@ -196,3 +196,41 @@ input{
     margin-top: 5px;
     font-weight: bold;
 }
+
+.tel-link{
+    color: whitesmoke;
+    background-color: rgb(106, 106, 106);
+    border: 2px solid #000;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    width: 10rem;
+    margin: 0.5rem auto;
+    padding-top:;
+}
+
+.tel-link:hover, .tel-link:focus{
+    background-color: #000;
+}
+
+.tel-link:active{
+    color: turquoise;
+}
+.email-link{
+    background-color: rgb(106, 106, 106);
+    color: whitesmoke;
+    border: 2px solid #000;
+    border-radius: 1rem;
+    display: flex;
+    justify-content: center;
+    width: 10rem;
+    margin: 0.5rem auto;
+}
+
+.email-link:hover, .email-link:focus{
+    background-color: #000;
+}
+
+.email-link:active{
+    color: turquoise;
+}
