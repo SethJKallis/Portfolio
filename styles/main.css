@@ -7,6 +7,7 @@
 
 html{
     scroll-behavior: smooth;
+    border: 5px solid #333;
 }
 
 /* header, main and footer */
@@ -46,9 +47,13 @@ a{
     border-radius: 10px;
 }
 
+.menu-list li a:active{
+    color: turquoise;
+}
+
 .logo{
     width: 2em;
-    border-radius: 1.5em;
+    border-radius: 1em;
 }
 
 .menu{
@@ -87,7 +92,22 @@ h3{
     font-size: 2rem;
 }
 
+.github-link{
+    color: white;
+    background-color: rgb(83, 83, 83);
+    border: 1px solid #000;
+    border-radius: 5rem;
+    width: 100px;
+    display: flex;
+    margin: 5px auto;
+    justify-content: center;
+    
+}
 
+.github-link:hover, .github-link:focus{
+    background-color: black;
+    color: whitesmoke;
+}
 
 .home-heading{
     margin-top: -3.5px;
@@ -132,4 +152,47 @@ textarea{
 
 .skills li{
     list-style: none ;
+}
+
+form{
+    width: 500px;
+    margin: auto;
+}
+
+button{
+    font-size: 1rem;
+    background-color: rgb(84, 84, 84);
+    color: white;
+    padding: 3px;
+    border-radius: 20px;
+    margin: 5px 5px;
+    cursor: pointer;
+}
+
+button:active{
+    color: turquoise;
+}
+
+button:hover{
+    background-color: #000;
+}
+
+fieldset div{
+    margin: 0 0 10px;
+}
+
+input{
+    padding: 5px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.textarea-comments{
+    border: 2px solid #000;
+    border-radius: 10px;
+    padding: 3px;
+    margin-top: 5px;
+    font-weight: bold;
 }

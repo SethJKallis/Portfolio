@@ -26,7 +26,7 @@
         <section>
             <!-- Home -->
              <div class="wrapper">
-                <h2 class="home-heading">Portfolio Of:</h2>
+                <h2 class="home-heading">Portfolio of:</h2>
                 <h3>Seth Kallis</h3>
                     <img class="profile" src="https://i.postimg.cc/hGYgg2JY/istockphoto-587805156-612x612.jpg" alt="Seth Kallis">
                     <p>Aspiring Developer</p>
@@ -68,7 +68,7 @@
         <section id="project">
             <!-- Project -->
             <h2>Project</h2>
-            <p>Projects that I have worked on before include drafting of statements for companies (confidential). <br> I have also done a few projects on web development: <br> <a href="https://github.com/SethJKallis/Portfolio" target="_blank">GitHub</a></p>
+            <p>Projects that I have worked on before include drafting of statements for companies (confidential). <br> I have also done a few projects on web development: <br> <a class="github-link" href="https://github.com/SethJKallis?tab=repositories" target="_blank">GitHub</a></p>
         </section>
 <br>
 <hr>
@@ -105,26 +105,28 @@
             <h2>Contact</h2>
             <form action="https://formspree.io/f/mvoyregg" method="post">
             <fieldset>
-                <form action="https://formspree.io/f/mvoyregg" method="post">
                 <legend>Contact Me:</legend>
                 <br>
-                <label for="name">Name:</label>
-                <input type="text" name="name" id="name" required placeholder="John">
-                <br><br>
-                    <label for="surname">Surname:</label>
-                    <input type="text" name="surname" id="surname" required placeholder="Doe">
-                <br><br>
-                    <label for="email">Email:</label>
-                    <input type="text" name="email" id="email" placeholder="email@gmail.com">
-                <br><br>
-                <label for="comments">Comments:</label><br>
-                <textarea name="comments" id="comments" cols="30" rows="5">Wassup?</textarea>
+                <div class="-input-name">
+                    <input type="text" name="name" id="name" required placeholder="First Name">
+                </div>
+                <div class="input-surname">
+                    <input type="text" name="surname" id="surname" required placeholder="Surname">
+                </div>
+                <div class="input-email">
+                    <input type="text" name="email" id="email" placeholder="Email Address" required>
+                </div>
+                <div class="comments">
+                <label class="label-comments" for="comments">Comments:</label><br>
+                <textarea class="textarea-comments" name="comments" id="comments" cols="30" rows="5">Wassup?</textarea>
+            </div>
                 <br>
-                <button>Submit</button>
-            <button type="reset">Reset</button>
             </fieldset>
-            
+            <button class="submit-button">Submit</button>
+                <button type="reset" class="reset-button">Reset</button>
         </form>
+
+        <hr>
 
         <h3>Contact me at:</h3>
         <address>
@@ -135,9 +137,9 @@
             7708
         </address>
         <br>
-        <p>Phone Number <br> <a href="tel:">064 933 8144</a></p>
+        <p>Phone Number <br> <a href="tel:" class="tel-link">064 933 8144</a></p>
         <br>
-        <p>Email Address <br><a href="mailto:">kallisseth@gmail.com</a></p>
+        <p>Email Address <br><a href="mailto:" class="email-link">kallisseth@gmail.com</a></p>
         </section>
    <br>    
    <hr> 
