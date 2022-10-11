@@ -119,34 +119,43 @@ h3{
     align-content: center;
     background-color: darkgrey;
 }
+
 .wrapper img{
     display: block;
     margin: 15px auto;
 }
+
 .wrapper p{
     text-align: center;
 }
+
 .profile{
     width: 25rem;
     border-radius: 50em;
 }
+
 dt{
     font-weight: bold;
 }
+
 main{
     background-color: lightgrey;
 }
+
 .skills{
     margin-left: 15px;
 }
+
 legend{
     font-size: larger;
     font-weight: bold;
 }
+
 label{
     padding-right: 10px;
     font-weight: bold;
 }
+
 textarea{
     margin-left: 15px;
 }
@@ -214,7 +223,6 @@ input{
     justify-content: center;
     width: 10rem;
     margin: 0.5rem auto;
-    padding-top:;
 }
 
 .tel-link:hover, .tel-link:focus{
@@ -224,6 +232,7 @@ input{
 .tel-link:active{
     color: turquoise;
 }
+
 .email-link{
     background-color: rgb(106, 106, 106);
     color: whitesmoke;
