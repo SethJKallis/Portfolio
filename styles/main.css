@@ -5,9 +5,14 @@
     box-sizing: border-box;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 /* header, main and footer */
 header, main, footer{
     min-width: 100%;
+    text-align: center;
 }
 
 header, footer{
@@ -17,10 +22,32 @@ header, footer{
 header{
     display: inline-flex;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
+}
+
+
+a{
+    color: #000;
+    text-decoration: none;
+    display: block;
+}
+
+.menu-list li a{
+    padding: 0.25rem;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+ li a:hover, a:focus{
+    background-color: #000;
+    color: whitesmoke;
+    border-radius: 10px;
 }
 
 .logo{
-    width: 3em;
+    width: 2em;
     border-radius: 1.5em;
 }
 
@@ -31,16 +58,39 @@ header{
 .menu-list{
     display: inline-flex;
     list-style: none;
+    border-radius: 10px;
 }
 
 .menu-list li{
     padding: 0 5px;
 }
 
-
 h1,h2,h3,h4,h5,h6{
+    font-size: 3rem;
     text-align: center;
     margin-bottom: 15px;
+    background-color: #000;
+    color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 200px;
+    border-radius: 2rem;
+}
+
+
+h2{
+    background-color: white;
+    color: #000;
+}
+
+h3{
+    font-size: 2rem;
+}
+
+
+
+.home-heading{
+    margin-top: -3.5px;
 }
 
 .wrapper{
@@ -56,6 +106,7 @@ h1,h2,h3,h4,h5,h6{
     text-align: center;
 }
 .profile{
+    width: 25rem;
     border-radius: 50em;
 }
 dt{
@@ -78,12 +129,7 @@ label{
 textarea{
     margin-left: 15px;
 }
-p{
-    text-align: center;
-}
-address{
-    text-align: center;
-}
-button{
-    
+
+.skills li{
+    list-style: none ;
 }
