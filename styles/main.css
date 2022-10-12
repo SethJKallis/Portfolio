@@ -1,4 +1,5 @@
 /* select all elements */
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -6,6 +7,7 @@
 }
 
 html{
+    font-family: 'Silkscreen';
     scroll-behavior: smooth;
     border: 5px solid #333;
     line-height: 1.5;
@@ -100,7 +102,12 @@ h3{
 
 .resume{
     width: 100%;
-    height: 100vh;
+}
+
+dt{
+    font-size: 2rem;
+    font-weight: bolder;
+    margin: 2rem 0 0 ;
 }
 
 .github-link{
@@ -118,6 +125,10 @@ h3{
 .github-link:hover, .github-link:focus{
     background-color: black;
     color: whitesmoke;
+}
+
+.github-link:active{
+    color: turquoise;
 }
 
 .home-heading{
@@ -184,6 +195,7 @@ form{
 }
 
 button{
+    font-family: 'Silkscreen';
     font-size: 1rem;
     background-color: rgb(84, 84, 84);
     color: white;
@@ -200,6 +212,9 @@ button:active{
 button:hover{
     background-color: #000;
 }
+button:active{
+    color: turquoise;
+}
 
 fieldset div{
     margin: 0 0 10px;
@@ -211,6 +226,11 @@ input{
     border-radius: 10px;
     font-weight: bold;
     text-align: center;
+}
+
+input:hover, input:active{
+    color: whitesmoke;
+    background-color: #000;
 }
 
 .textarea-comments{
@@ -249,7 +269,7 @@ input{
     border-radius: 1rem;
     display: flex;
     justify-content: center;
-    width: 10rem;
+    width: 15rem;
     margin: 0.5rem auto;
 }
 
