@@ -15,7 +15,8 @@
         <nav class="menu">
             <ul class="menu-list">
                 <li>
-                    <a  href="#home">Home<i class="fa-solid fa-house-user"></i></a></li>
+                <a  href="#home">Home<i class="fa-solid fa-house-user"></i></a>
+                </li>
                 <li><a href="#resume">Resume</a></li>
                 <li><a href="#project">Project</a></li>
                 <li><a href="#about">About</a></li>
@@ -26,7 +27,7 @@
     </header>
 
     <main>
-        <section>
+        <section class="landing">
             <!-- Home -->
              <div class="wrapper">
                 <h2 class="home-heading">Portfolio of:</h2>
@@ -38,7 +39,7 @@
              <hr>
 
         </section>
-
+        <article class="body-content">
         <section id="resume" class="resume">
             <!-- Resume -->
             <h2>Resume</h2>
@@ -66,25 +67,12 @@
                 </dl>
         </section>
 <br>
-<hr>
-<br>
         <section id="project">
             <!-- Project -->
             <h2>Project</h2>
             <p>Projects that I have worked on before include drafting of statements for companies (confidential). <br> I have also done a few projects on web development: <br> <a class="github-link" href="https://github.com/SethJKallis?tab=repositories" target="_blank">GitHub</a></p>
-        </section>
-<br>
-<hr>
-<br>
 
-        <section id="about">
-            <h2>About me</h2>
-            <h3>Hobbies</h3>
-            <p> love listening to all types of music ranging from rock to RnB to Drill. I also enjoy gaming on PC. I have a steam library with more than 100 games. I play 5-a-side football every Sunday and watch anime when I'm not being active.</p><br>
-            <h3>Aspirations</h3>
-            <p>I aspire to become a Web Developer. My short-term goal is to become a frint-end web developer. I want to work as a front-end developer before transitioning into a back-end developer. Once I've become a back-end developer I would work for a few years before becoming a freelance Back-end, Front-end and/or Full Stack Developer.</p>
-            <br>
-            <h3>Skills</h3>
+            <h2 class="skills-heading">Skills</h2>
             <p>
             <ul class="skills">
                 <li>Computer Literate</li>
@@ -96,6 +84,19 @@
                 <li>Fluent in both English and Afrikaans.</li>
             </ul>
             </p>
+        </section>
+<br>
+<hr>
+<br>
+
+        <section id="about">
+            <h2>About me</h2>
+            <h3>Hobbies</h3>
+            <p>I love listening to all types of music ranging from rock to RnB to Drill. I also enjoy gaming on PC. I have a steam library with more than 100 games. I play 5-a-side football every Sunday and watch anime when I'm not being active.</p><br>
+            <h3>Aspirations</h3>
+            <p>I aspire to become a Web Developer. My short-term goal is to become a frint-end web developer. I want to work as a front-end developer before transitioning into a back-end developer. Once I've become a back-end developer I would work for a few years before becoming a freelance Back-end, Front-end and/or Full Stack Developer.</p>
+            <br>
+            
 
         </section>
 
@@ -118,7 +119,7 @@
                     <input type="text" name="surname" id="surname" required placeholder="Surname">
                 </div>
                 <div class="input-email">
-                    <input type="text" name="email" id="email" placeholder="Email Address" required>
+                    <input type="email" name="email" id="email" placeholder="Email Address" required>
                 </div>
                 <div class="comments">
                 <label class="label-comments" for="comments">Comments:</label><br>
@@ -150,6 +151,7 @@
         </section>
    <br>    
    <hr> 
+</article>
     </main>
 
     <footer>

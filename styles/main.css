@@ -1,5 +1,6 @@
 /* select all elements */
 @import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -9,7 +10,7 @@
 html{
     font-family: 'Silkscreen';
     scroll-behavior: smooth;
-    border: 5px solid #333;
+    /* border: 5px solid #333; */
     line-height: 1.5;
 }
 
@@ -32,8 +33,13 @@ header{
 }
 
 main{
+    /* border: 2px solid #000; */
     background-color: #ffeead;
     /* background-size: cover; */
+}
+
+.body-content{
+    padding: 0.25rem;
 }
 
 a{
@@ -90,10 +96,13 @@ h1,h2,h3,h4,h5,h6{
     border-radius: 2rem;
 }
 
-
 h2{
     background-color: #000;
     color: whitesmoke;
+}
+
+.skills-heading{
+    margin-top: 2.5rem;
 }
 
 h3{
@@ -119,7 +128,6 @@ dt{
     display: flex;
     margin: 5px auto;
     justify-content: center;
-    
 }
 
 .github-link:hover, .github-link:focus{
@@ -133,6 +141,7 @@ dt{
 
 .home-heading{
     margin-top: -4.7px;
+
 }
 
 .wrapper{
@@ -159,8 +168,6 @@ dt{
 dt{
     font-weight: bold;
 }
-
-
 
 .skills{
     margin-left: 15px;
