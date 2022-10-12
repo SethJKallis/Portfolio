@@ -292,3 +292,21 @@ input:hover, input:active{
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.back-to-top{
+    border: 2px solid #000;
+    border-radius: 1rem;
+    display: block;
+    margin: auto;
+    padding: auto;
+    width: 20%;
+}
+
+.back-to-top:hover, .back-to-top:focus{
+    background-color: #000;
+    color: whitesmoke;
+}
+
+.back-to-top:active{
+    color: turquoise;
+}
