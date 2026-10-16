@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
+import { setWheelSupport } from "../src/propCollisions.ts";
 import {
   createVehicle,
   driveVehicle,
@@ -72,6 +73,30 @@ test("suspension supports a parked car and tire forces accelerate, steer and rev
     assert.ok(
       vehicleOrientation(body).forwardSpeed < -3,
       "braking transitions into reverse",
+    );
+  } finally {
+    world.free();
+  }
+});
+
+test("light props do not lift the car through suspension rays, while ordinary surfaces still support it", () => {
+  const { world, body, step } = rig();
+  try {
+    const baseline = body.translation().y;
+    const fixture = world.createCollider(
+      R.ColliderDesc.cuboid(2, 0.06, 2).setTranslation(0, 0.1, 17),
+    );
+    setWheelSupport(fixture, false);
+    for (let i = 0; i < 150; i++) step();
+    assert.ok(
+      Math.abs(body.translation().y - baseline) < 0.025,
+      "a light prop beneath the wheels causes no hop",
+    );
+    setWheelSupport(fixture, true);
+    for (let i = 0; i < 150; i++) step();
+    assert.ok(
+      body.translation().y > baseline + 0.12,
+      "ordinary supporting surfaces still raise the suspension",
     );
   } finally {
     world.free();

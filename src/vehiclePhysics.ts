@@ -1,5 +1,6 @@
 import type { RapierContext, RapierRigidBody } from "@react-three/rapier";
 import { rotateVector } from "./impactMath.ts";
+import { supportsVehicleWheels } from "./propCollisions.ts";
 
 export const wheelLayout = [
   { x: -1.04, z: -1.12, front: true },
@@ -110,12 +111,14 @@ export function driveVehicle(
     );
     vehicle.setWheelFrictionSlip(index, brake && !wheel.front ? 0.65 : 3.1);
   }
-  // Exclude the compound chassis from its own wheel rays, but keep movable props.
+  // Light breakable props must not act as ramps under the suspension.
   vehicle.updateVehicle(
     dt,
     undefined,
     undefined,
-    (collider) => collider.parent()?.handle !== body.handle,
+    (collider) =>
+      collider.parent()?.handle !== body.handle &&
+      supportsVehicleWheels(collider),
   );
   let contacts = 0;
   for (let index = 0; index < wheelLayout.length; index++) {

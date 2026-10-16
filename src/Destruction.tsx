@@ -37,7 +37,8 @@ export function useImpactVelocity(
   });
   return data;
 }
-export type BreakHandler = (kind: BreakMaterial, speed: number) => void;
+export type BreakKind = BreakMaterial | import("./sceneryPhysics").PropKind;
+export type BreakHandler = (kind: BreakKind, speed: number) => void;
 const dimensions: Record<BreakMaterial, Point> = {
   crate: [1.5, 1.5, 1.5],
   pot: [1.25, 1.5, 1.25],

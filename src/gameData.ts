@@ -1,5 +1,5 @@
 import { education, experience, profile, projects } from "./data.ts";
-import { trackPoint, tracksidePoint } from "./circuit.ts";
+import { districts } from "./worldLayout.ts";
 
 export type Point = [number, number, number];
 export type ZoneId =
@@ -66,7 +66,6 @@ export type Exhibit = {
   source?: string;
   action?: string;
   rotation?: number;
-  progress?: number;
 };
 const portfolioEntries: Exhibit[] = [
   {
@@ -76,7 +75,7 @@ const portfolioEntries: Exhibit[] = [
     title: "Hello, I’m Seth.",
     kicker: "01 / THE HUMAN",
     subtitle: profile.role,
-    text: "Based in Cape Town. I build data pipelines, connect systems, and create useful AI automations.\n\nTake a lap through my story, or browse the chapters here. You’ll find my work, projects, education, and ways to get in touch.",
+    text: "Based in Cape Town. I build data pipelines, connect systems, and create useful AI automations.\n\nTake a drive through my neighbourhood, or browse the chapters here. You’ll find my work, projects, education, and ways to get in touch.",
     color: "#e17a54",
   },
   {
@@ -96,7 +95,7 @@ const portfolioEntries: Exhibit[] = [
     title: "A little off-screen.",
     kicker: "BEYOND THE WORK",
     subtitle: "A curious human, first.",
-    text: "Poetry. Staying active. A game of football. Building things and learning how they work.\n\nTake the jump lane or clip a tire stack. A portfolio should have room to play.",
+    text: "Poetry. Staying active. A game of football. Building things and learning how they work.\n\nTry the ramps in the makers’ yard or nudge a stack of tires. A portfolio should have room to play.",
     color: "#e17a54",
   },
   ...experience.map((e, i) => ({
@@ -171,18 +170,11 @@ const portfolioEntries: Exhibit[] = [
     action: "Open GitHub",
   },
 ];
-export const zones = sectorDefinitions.map((sector, index) => {
-  const progress = 0.055 + index * 0.19;
-  const p = trackPoint(progress);
-  const landmark = tracksidePoint(progress, -18);
+export const zones = sectorDefinitions.map((sector) => {
+  const district = districts.find((d) => d.id === sector.id)!;
   return {
     ...sector,
-    progress,
-    x: p.x,
-    z: p.z,
-    landmark: [landmark.x, 0, landmark.z] as Point,
-    rotation: p.heading,
-    offset: landmark.offset,
+    ...district,
     firstEntry: portfolioEntries.find((e) => e.zone === sector.id)!.id,
   };
 });
@@ -190,7 +182,6 @@ export const exhibits: Exhibit[] = portfolioEntries.map((entry) => {
   const zone = zones.find((z) => z.id === entry.zone)!;
   return {
     ...entry,
-    progress: zone.progress,
     position: [zone.landmark[0], 2, zone.landmark[2]],
     rotation: zone.rotation,
   };
@@ -211,8 +202,4 @@ export type Telemetry = {
   near: string | null;
   airborne: boolean;
   flipped: boolean;
-  progress: number;
-  lap: number;
-  lapTime: number;
-  bestLap: number | null;
 };

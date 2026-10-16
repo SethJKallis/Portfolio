@@ -22,9 +22,9 @@ import {
   type Telemetry,
   type ZoneId,
 } from "./gameData";
-import { CircuitLandscape as Landscape } from "./CircuitLandscape";
+import { TownLandscape as Landscape } from "./TownLandscape";
 import { RacecarModel } from "./RacecarModel";
-import { nearestTrack, raceSpawn, progressDistance } from "./circuit";
+import { townSpawn, isPaved } from "./worldLayout";
 import { useImpactVelocity, type BreakHandler } from "./Destruction";
 import { RenderDiagnostics } from "./RenderDiagnostics";
 import {
@@ -52,8 +52,9 @@ type Props = {
   onBreak: BreakHandler;
   worldReset: number;
   visited: ZoneId[];
+  onSelect: (id: string) => void;
 };
-const spawn = raceSpawn;
+const spawn = townSpawn;
 function Car({
   input,
   pose,
@@ -72,13 +73,6 @@ function Car({
     jumpCooldown = useRef(0),
     report = useRef(0),
     contacts = useRef(0);
-  const race = useRef({
-    lap: 0,
-    time: 0,
-    best: null as number | null,
-    halfway: false,
-    previous: 0,
-  });
   const renderedPosition = useMemo(() => new THREE.Vector3(), []);
   const vehicleData = useImpactVelocity(body, "vehicle");
   useEffect(() => {
@@ -112,13 +106,6 @@ function Car({
     ) {
       resetSeen.current = i.reset;
       heading.current = spawn.heading;
-      race.current = {
-        lap: 0,
-        time: 0,
-        best: null,
-        halfway: false,
-        previous: 0,
-      };
       jumpSeen.current = i.jump;
       jumpCooldown.current = 0;
       contacts.current = 0;
@@ -137,27 +124,6 @@ function Car({
       return;
     }
     if (paused) return;
-    if (Math.hypot(b.linvel().x, b.linvel().z) > 1 || race.current.time > 0)
-      race.current.time += dt;
-    const location = nearestTrack(p.x, p.z);
-    if (location.distance < 10) {
-      if (location.progress > 0.4 && location.progress < 0.6)
-        race.current.halfway = true;
-      if (
-        race.current.previous > 0.92 &&
-        location.progress < 0.08 &&
-        race.current.halfway
-      ) {
-        race.current.lap++;
-        race.current.best = Math.min(
-          race.current.best ?? Infinity,
-          race.current.time,
-        );
-        race.current.time = 0;
-        race.current.halfway = false;
-      }
-      race.current.previous = location.progress;
-    }
     const k = i.keys,
       throttle =
         i.throttle ||
@@ -229,12 +195,10 @@ function Car({
     report.current += delta;
     if (report.current > 0.16) {
       report.current = 0;
-      const location = nearestTrack(p.x, p.z);
       const zone = zones.find(
         (zone) =>
-          (location.distance < 14 &&
-            progressDistance(zone.progress, location.progress) < 0.035) ||
-          Math.hypot(p.x - zone.landmark[0], p.z - zone.landmark[2]) < 9,
+          Math.hypot(p.x - zone.x, p.z - zone.z) < 25 ||
+          Math.hypot(p.x - zone.landmark[0], p.z - zone.landmark[2]) < 12,
       );
       const near = zone?.firstEntry ?? null;
       onTelemetry({
@@ -245,10 +209,6 @@ function Car({
         near,
         airborne: contacts.current === 0,
         flipped: orientation.upright < 0.1,
-        progress: location.progress,
-        lap: race.current.lap,
-        lapTime: race.current.time,
-        bestLap: race.current.best,
       });
     }
   }, -20);
@@ -307,7 +267,7 @@ function Dust({
   useFrame((_, d) => {
     clock.current += d;
     const p = pose.current;
-    const offroad = nearestTrack(p.x, p.z).distance > 9.2;
+    const offroad = !isPaved(p.x, p.z);
     const drifting =
       input.current.brake ||
       input.current.keys.has("b") ||
@@ -440,6 +400,7 @@ function GameScene(props: Props) {
         paused={props.paused}
         visited={props.visited}
         focus={pose}
+        onSelect={props.onSelect}
       />
       <Car {...props} pose={pose} />
       <Dust pose={pose} paused={props.paused} input={props.input} />

@@ -3,6 +3,3 @@ dist/
 *.local
 *.tsbuildinfo
 .qa/
-
-.firebase/
-firebase-debug*.log

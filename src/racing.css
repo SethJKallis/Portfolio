@@ -426,51 +426,6 @@ kbd {
   font-size: 8px;
   line-height: 1.5;
 }
-.race-hud {
-  position: absolute;
-  top: 112px;
-  right: 24px;
-  display: flex;
-  gap: 26px;
-  padding: 13px 19px 17px;
-  background: #183c3de8;
-  border-radius: 4px;
-  border: 1px solid #dce6bd22;
-  pointer-events: none;
-}
-.race-hud > div {
-  display: grid;
-  gap: 5px;
-}
-.race-hud small {
-  font-size: 6px;
-  letter-spacing: 1.5px;
-  color: #a9bea4;
-}
-.race-hud strong {
-  font-size: 20px;
-  font-weight: 500;
-  font-style: italic;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.5px;
-}
-.race-hud > div:first-child strong {
-  color: #e6ef84;
-}
-.lap-progress {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 2px;
-  bottom: 0;
-  background: #d8e4bd18;
-  overflow: hidden;
-}
-.lap-progress > i {
-  display: block;
-  background: #e5ed82;
-  height: 100%;
-}
 .bottom-left {
   left: 24px;
   bottom: 22px;
@@ -570,14 +525,32 @@ kbd {
   background: #72915e;
   height: 245px;
 }
-.circuit-map-svg {
+.town-map-svg {
   position: absolute;
   inset: 0;
   height: 100%;
   width: 100%;
 }
+.map-zone {
+  z-index: 3;
+  border: 0;
+  background: transparent;
+  padding: 5px 2px;
+  cursor: pointer;
+}
 .map-zone small {
-  display: none;
+  display: block;
+  max-width: 92px;
+  white-space: normal;
+  color: #edf0d5;
+  background: #183c3de8;
+  border-radius: 3px;
+  font-size: 8px;
+  line-height: 1.25;
+  padding: 3px 5px;
+}
+.map-zone:hover small {
+  background: #284f43;
 }
 .map-zone > span {
   color: #fff6dd;
@@ -650,12 +623,6 @@ kbd {
   color: #bccda9;
 }
 @media (max-width: 900px) {
-  .race-hud {
-    gap: 17px;
-  }
-  .race-hud .best-lap {
-    display: none;
-  }
   .location-hud {
     max-width: 260px;
   }
@@ -716,19 +683,6 @@ kbd {
   }
   .location-hud small {
     font-size: 7px;
-  }
-  .race-hud {
-    right: 12px;
-    top: 90px;
-    padding: 10px 11px;
-    gap: 12px;
-  }
-  .race-hud strong {
-    font-size: 15px;
-  }
-  .race-hud small {
-    font-size: 5px;
-    letter-spacing: 0.8px;
   }
   .bottom-left {
     left: 12px;

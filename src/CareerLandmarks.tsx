@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { DestructibleAssembly } from "./SceneryDestruction";
 import * as THREE from "three";
 import { RoundedBox } from "@react-three/drei";
 import { zones, type ZoneId, type Point } from "./gameData";
-import { trackPoint } from "./circuit";
 function Block({
   p = [0, 0, 0],
   s,
@@ -256,7 +255,7 @@ export function CareerLandmarks({ visited }: { visited: ZoneId[] }) {
   useFrame(({ clock }) =>
     beacons.current.forEach((beacon, i) => {
       if (beacon) {
-        beacon.position.y = 2.2 + Math.sin(clock.elapsedTime * 2 + i) * 0.2;
+        beacon.position.y = 6.3 + Math.sin(clock.elapsedTime * 2 + i) * 0.2;
         beacon.rotation.z = clock.elapsedTime * 0.25;
       }
     }),
@@ -265,26 +264,29 @@ export function CareerLandmarks({ visited }: { visited: ZoneId[] }) {
     <>
       {zones.map((zone, index) => {
         const passed = visited.includes(zone.id),
-          p = trackPoint(zone.progress);
+          p = {
+            x: zone.landmark[0],
+            z: zone.landmark[2],
+            heading: zone.rotation,
+          };
         return (
           <group key={zone.id}>
             <group position={zone.landmark} rotation={[0, zone.rotation, 0]}>
-              <RigidBody type="fixed" colliders={false}>
-                <CuboidCollider
-                  args={[2.2, 0.3, 2.2]}
-                  position={[0, 0.25, 0]}
+              <DestructibleAssembly
+                kind="sculpture"
+                half={[2.4, 1.9, 2.4]}
+                center={[0, 1.9, 0]}
+              >
+                <Block p={[0, 0.15, 0]} s={[4.8, 0.3, 4.8]} c="#294c49" />
+                <Block p={[0, 0.32, 0]} s={[4.5, 0.06, 4.5]} c={zone.color} />
+                <group position={[0, 0.4, 0]}>
+                  <Sculpture kind={zone.id} color={zone.color} />
+                </group>
+                <Label
+                  title={`${String(index + 1).padStart(2, "0")} / ${zone.name}`}
+                  color={zone.color}
                 />
-                <CuboidCollider args={[1.45, 1.7, 1.2]} position={[0, 2, 0]} />
-              </RigidBody>
-              <Block p={[0, 0.15, 0]} s={[4.8, 0.3, 4.8]} c="#294c49" />
-              <Block p={[0, 0.32, 0]} s={[4.5, 0.06, 4.5]} c={zone.color} />
-              <group position={[0, 0.4, 0]}>
-                <Sculpture kind={zone.id} color={zone.color} />
-              </group>
-              <Label
-                title={`${String(index + 1).padStart(2, "0")} / ${zone.name}`}
-                color={zone.color}
-              />
+              </DestructibleAssembly>
               <mesh position={[0, 0.02, 1]} rotation={[-Math.PI / 2, 0, 0]}>
                 <ringGeometry args={[3.5, 3.65, 48]} />
                 <meshBasicMaterial
@@ -300,6 +302,7 @@ export function CareerLandmarks({ visited }: { visited: ZoneId[] }) {
                   ref={(node) => {
                     beacons.current[index] = node;
                   }}
+                  scale={0.45}
                 >
                   <mesh>
                     <torusGeometry args={[1.65, 0.055, 8, 48]} />

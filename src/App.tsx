@@ -25,34 +25,35 @@ import {
   type Telemetry,
   type ZoneId,
 } from "./gameData";
-import type { BreakMaterial } from "./impactMath";
-import { raceSpawn, trackSamples, mapPosition, circuitLength } from "./circuit";
+import type { BreakKind } from "./Destruction";
+import {
+  townSpawn,
+  streets,
+  buildings,
+  mapPosition,
+  nearestStreet,
+} from "./worldLayout";
 import { PortfolioReader } from "./PortfolioReader";
 import { nextPortfolioStop } from "./portfolioStops";
 const World = lazy(() => import("./World"));
 const initial: Telemetry = {
-  x: raceSpawn.x,
-  z: raceSpawn.z,
+  x: townSpawn.x,
+  z: townSpawn.z,
   speed: 0,
-  heading: raceSpawn.heading,
+  heading: townSpawn.heading,
   near: null,
   airborne: false,
   flipped: false,
-  progress: 0,
-  lap: 0,
-  lapTime: 0,
-  bestLap: null,
 };
-function raceTime(seconds: number) {
-  return `${String(Math.floor(seconds / 60)).padStart(2, "0")}:${(seconds % 60).toFixed(1).padStart(4, "0")}`;
-}
-const mapPath =
-  trackSamples
-    .map((p, i) => {
-      const m = mapPosition(p.x, p.z);
-      return `${i ? "L" : "M"}${m.x},${m.z}`;
-    })
-    .join(" ") + " Z";
+const mapStreets = streets.map((street) => {
+  const a = mapPosition(...street.from),
+    b = mapPosition(...street.to);
+  return {
+    ...street,
+    path: "M" + a.x + "," + a.z + " L" + b.x + "," + b.z,
+    mapWidth: Math.abs(mapPosition(street.width, 0).x - mapPosition(0, 0).x),
+  };
+});
 function AudioEngine() {
   let context: AudioContext | null = null,
     oscillator: OscillatorNode | null = null;
@@ -172,12 +173,24 @@ export default function App() {
       openPortfolio("hello");
     }
   }, [openPortfolio]);
-  const onBreak = useCallback((kind: BreakMaterial, speed: number) => {
+  const onBreak = useCallback((kind: BreakKind, speed: number) => {
     setImpactToast(
       {
         crate: "CRATE SPLINTERED",
         pot: "POT SHATTERED",
         barrier: "BARRIER BUSTED",
+        tire: "TIRE SHREDDED",
+        tree: "TREE TOPPLED",
+        rock: "ROCK CRACKED",
+        bench: "BENCH SPLINTERED",
+        lamp: "LAMP TOPPLED",
+        planter: "PLANTER SHATTERED",
+        cafe: "TABLES TURNED",
+        fountain: "FOUNTAIN CRUMBLED",
+        sculpture: "SCULPTURE SCATTERED",
+        ramp: "RAMP BROKEN",
+        npc: "BLOCKS ON THE LOOSE",
+        foliage: "LEAVES FLYING",
       }[kind],
     );
     audio.current?.crash(speed);
@@ -309,7 +322,7 @@ export default function App() {
       <div
         className="game-canvas"
         tabIndex={0}
-        aria-label="Seth Kallis’s racing portfolio. CV chapters open automatically at career landmarks. Drive with WASD. Press E to revisit a chapter."
+        aria-label="Seth Kallis’s open-world town portfolio. CV chapters open automatically at career landmarks. Drive with WASD. Press E to revisit a chapter."
       >
         <Suspense fallback={null}>
           <World
@@ -321,6 +334,7 @@ export default function App() {
             onBreak={onBreak}
             worldReset={worldReset}
             visited={visited}
+            onSelect={openPortfolio}
           />
         </Suspense>
       </div>
@@ -342,7 +356,7 @@ export default function App() {
             s<span>k</span>
           </span>
           <div>
-            SETH KALLIS<small>GRAND PRIX / THE PORTFOLIO CIRCUIT</small>
+            SETH KALLIS<small>A LITTLE WORLD OF WORK</small>
           </div>
         </div>
         <div className="header-tools">
@@ -398,11 +412,11 @@ export default function App() {
         <div className="location-hud">
           <span className="live-dot" />
           <p>
-            {zone ? zone.name : "Kallis Motor Circuit"}
+            {zone ? zone.place : nearestStreet(telemetry.x, telemetry.z).name}
             <small>
               {zone
                 ? zone.description
-                : `${(circuitLength / 1000).toFixed(2)} km · Straights, switchbacks & infield esses`}
+                : "A neighbourhood to explore. Five stories to discover."}
             </small>
           </p>
         </div>
@@ -415,27 +429,6 @@ export default function App() {
         />
       )}
       {!inspection && (
-        <aside className="race-hud" aria-label="Lap timing">
-          <div>
-            <small>LAP</small>
-            <strong>{String(telemetry.lap + 1).padStart(2, "0")}</strong>
-          </div>
-          <div>
-            <small>CURRENT</small>
-            <strong>{raceTime(telemetry.lapTime)}</strong>
-          </div>
-          <div className="best-lap">
-            <small>BEST</small>
-            <strong>
-              {telemetry.bestLap === null ? "—" : raceTime(telemetry.bestLap)}
-            </strong>
-          </div>
-          <i className="lap-progress">
-            <i style={{ width: `${telemetry.progress * 100}%` }} />
-          </i>
-        </aside>
-      )}
-      {!inspection && (
         <div className="bottom-left">
           <button
             className="map-toggle"
@@ -444,7 +437,7 @@ export default function App() {
             aria-label="Toggle world map"
           >
             <Map size={16} />
-            <span>{map ? "Close map" : "Circuit map"}</span>
+            <span>{map ? "Close map" : "Town map"}</span>
             <kbd>M</kbd>
           </button>
           <div className="discovery">
@@ -475,38 +468,64 @@ export default function App() {
       {map && !inspection && (
         <aside className="world-map" aria-label="World map">
           <div className="map-top">
-            KALLIS MOTOR CIRCUIT
+            SETH’S NEIGHBOURHOOD
             <Compass size={14} />
           </div>
           <div className="map-plot">
             <svg
-              className="circuit-map-svg"
+              className="town-map-svg"
               viewBox="0 0 100 100"
               preserveAspectRatio="none"
               aria-hidden="true"
             >
-              <path d={mapPath} fill="none" stroke="#839b87" strokeWidth="10" />
-              <path d={mapPath} fill="none" stroke="#263f41" strokeWidth="7" />
-              <path
-                d={mapPath}
-                fill="none"
-                stroke="#ced8b3"
-                strokeWidth=".5"
-                strokeDasharray="1 2"
-              />
+              {buildings.map((b) => {
+                const a = mapPosition(b.x - b.w / 2, b.z - b.d / 2),
+                  c = mapPosition(b.x + b.w / 2, b.z + b.d / 2);
+                return (
+                  <rect
+                    key={b.id}
+                    x={a.x}
+                    y={a.z}
+                    width={c.x - a.x}
+                    height={c.z - a.z}
+                    fill="#b1b79a"
+                    rx=".6"
+                  />
+                );
+              })}
+              {mapStreets.map((street) => (
+                <path
+                  key={street.name}
+                  d={street.path}
+                  fill="none"
+                  stroke="#d8d6b3"
+                  strokeWidth={street.mapWidth + 1.5}
+                />
+              ))}
+              {mapStreets.map((street) => (
+                <path
+                  key={street.name}
+                  d={street.path}
+                  fill="none"
+                  stroke="#355452"
+                  strokeWidth={street.mapWidth}
+                />
+              ))}
             </svg>
             {zones.map((z, i) => (
-              <div
+              <button
                 key={z.id}
                 className={`map-zone ${visited.includes(z.id) ? "discovered" : ""}`}
+                onClick={() => openPortfolio(z.firstEntry)}
+                aria-label={`Read ${z.name} at ${z.place}`}
                 style={{
                   left: `${mapPosition(z.x, z.z).x}%`,
                   top: `${mapPosition(z.x, z.z).z}%`,
                 }}
               >
                 <span style={{ background: z.color }}>{i + 1}</span>
-                <small>{z.name}</small>
-              </div>
+                <small>{z.place}</small>
+              </button>
             ))}
             <div
               className="map-car"
@@ -519,7 +538,10 @@ export default function App() {
               ▲
             </div>
           </div>
-          <p>CV chapters open automatically when you reach a landmark.</p>
+          <p>
+            Explore any street. CV chapters open when you arrive at their
+            places.
+          </p>
         </aside>
       )}
       {!inspection && (
@@ -652,20 +674,19 @@ export default function App() {
             >
               <X size={18} />
             </button>
-            <p className="mini-label">YOUR GRID BRIEFING</p>
+            <p className="mini-label">YOUR NEIGHBOURHOOD GUIDE</p>
             <h1>
-              Find your
+              Take the
               <br />
-              <em>racing line.</em>
+              <em>scenic route.</em>
             </h1>
             <p>
-              Take on 1.28 km of pit straights, infield esses, switchbacks, and
-              technical corners. You control every turn: W accelerates, A/D
-              steers, and S brakes before a bend. Shift boosts on the straights.
-              Open any portfolio chapter from the Portfolio button, or press E
-              near a landmark. New chapters open automatically and pause the car
-              while you read. Jumps and smashable props stay in optional outside
-              lanes. R recovers the car.
+              Explore Seth’s Square, the Data Studio, Makers’ Yard, the Library,
+              and the Post Office Garden in any order. W accelerates, A/D
+              steers, S brakes and reverses, and Shift boosts. CV chapters open
+              automatically on arrival and pause the car while you read. Find
+              ramps in the play yard, knock town props into pieces, or take a
+              quiet drive through the trees.
             </p>
             <div className="controls-list">
               {[
@@ -677,7 +698,7 @@ export default function App() {
                 ["SPACE", "Jump"],
                 ["E / ENTER", "Inspect nearby exhibit"],
                 ["DRAG / WHEEL", "Orbit / zoom camera"],
-                ["R", "Respawn at the start"],
+                ["R", "Return to the starting street"],
                 ["V", "Rebuild all props & debris"],
                 ["M / H", "Map / honk (audio on)"],
               ].map(([key, label]) => (
